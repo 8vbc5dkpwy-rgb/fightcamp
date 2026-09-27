@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#090909">
+<title>FIGHTCAMP — Boxing Training</title>
+
+<style>
+:root{
+  --bg:#080808;
+  --card:#151515;
+  --card2:#1d1d1d;
+  --text:#f5f5f5;
+  --muted:#929292;
+  --red:#e31b23;
+  --red2:#ff343c;
+  --line:#292929;
+  --green:#34d399;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+button{
+  font:inherit;
+  color:inherit;
+}
+
+.app{
+  max-width:560px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:88px;
+}
+
+header{
+  padding:24px 20px 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:950;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:var(--red);
+}
+
+.header-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.level{
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:8px 11px;
+  border-radius:14px;
+  font-size:12px;
+  font-weight:800;
+}
+
+main{
+  padding:8px 16px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  padding:20px 4px 12px;
+}
+
+.eyebrow{
+  color:var(--red2);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+h1{
+  font-size:34px;
+  line-height:1.05;
+  margin:7px 0;
+}
+
+.hero p{
+  color:var(--muted);
+  margin:8px 0 0;
+}
+
+.card{
+  background:linear-gradient(145deg,#191919,#111);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+  margin:12px 0;
+}
+
+.card h2{
+  font-size:17px;
+  margin:0 0 12px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:14px 10px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:23px;
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.progress{
+  height:8px;
+  background:#292929;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  background:var(--red);
+  width:0%;
+  border-radius:20px;
+}
+
+.btn{
+  border:0;
+  border-radius:15px;
+  padding:14px 16px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.primary{
+  background:var(--red);
+}
+
+.primary:active{
+  background:#b81219;
+}
+
+.secondary{
+  background:#292929;
+}
+
+.wide{
+  width:100%;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.round-card{
+  text-align:center;
+  padding:24px 14px;
+}
+
+.timer{
+  font-size:72px;
+  font-weight:900;
+  letter-spacing:-3px;
+  font-variant-numeric:tabular-nums;
+}
+
+.round-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  margin:5px 0 18px;
+}
+
+.timer-actions{
+  display:flex;
+  gap:9px;
+}
+
+.timer-actions button{
+  flex:1;
+}
+
+select,
+input{
+  width:100%;
+  background:#202020;
+  border:1px solid #303030;
+  color:white;
+  border-radius:12px;
+  padding:12px;
+  margin-top:7px;
+  outline:none;
+}
+
+label{
+  font-size:11px;
+  color:var(--muted);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+
+.exercise{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.exercise:last-child{
+  border-bottom:0;
+}
+
+.check{
+  width:24px;
+  height:24px;
+  border:2px solid #555;
+  border-radius:50%;
+  background:none;
+  flex:none;
+}
+
+.exercise.done .check{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+.exercise.done .name{
+  text-decoration:line-through;
+  color:#777;
+}
+
+.name{
+  font-weight:800;
+}
+
+.details{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.badges{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.badge{
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--card);
+}
+
+.badge b{
+  display:block;
+  margin-bottom:4px;
+}
+
+.badge small{
+  color:var(--muted);
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(560px,100%);
+  background:rgba(12,12,12,.95);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 8px 12px;
+  z-index:10;
+}
+
+nav button{
+  background:none;
+  border:0;
+  color:#777;
+  font-size:10px;
+  font-weight:800;
+  padding:5px;
+}
+
+nav button.active{
+  color:white;
+}
+
+nav .icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  background:#f5f5f5;
+  color:#111;
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:13px;
+  z-index:30;
+  transition:.25s;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(min-width:600px){
+  nav{
+    border-radius:20px 20px 0 0;
+  }
+
+  .app{
+    border-left:1px solid #111;
+    border-right:1px solid #111;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div>
+    <div class="logo">FIGHT<span>CAMP</span></div>
+    <div class="header-sub">TRAIN • TRACK • IMPROVE</div>
+  </div>
+
+  <div class="level">
+    LVL <span id="level">1</span> •
+    <span id="xp">0</span> XP
+  </div>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+
+  <div class="hero">
+    <div class="eyebrow">WELCOME BACK, FIGHTER</div>
+    <h1>Put in the rounds.</h1>
+    <p>Small improvements become a dangerous fighter.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <strong id="streak">0</strong>
+      <small>Day streak</small>
+    </div>
+
+    <div class="stat">
+      <strong id="rounds">0</strong>
+      <small>Rounds</small>
+    </div>
+
+    <div class="stat">
+      <strong id="minutes">0</strong>
+      <small>Minutes</small>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Today's mission</h2>
+
+    <p class="muted">
+      Complete 3 rounds and finish your workout.
+    </p>
+
+    <div class="progress">
+      <i id="missionProgress"></i>
+    </div>
+
+    <p class="muted" style="font-size:12px">
+      <span id="missionCount">0</span>/4 objectives
+    </p>
+
+    <button
+      class="btn primary wide"
+      onclick="showPage('timer')">
+      START ROUND
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>Quick actions</h2>
+
+    <div class="grid2">
+
+      <button
+        class="btn secondary"
+        onclick="showPage('workout')">
+        💪 Workout
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="showPage('timer')">
+        ⏱️ Timer
+      </button>
+
+    </div>
+  </div>
+
+</section>
+
+
+<section id="timer" class="page">
+
+  <div class="hero">
+    <div class="eyebrow">FIGHT MODE</div>
+    <h1>Round Timer</h1>
+    <p>Train with automatic work and rest periods.</p>
+  </div>
+
+  <div class="card round-card">
+
+    <div class="round-label" id="timerStatus">
+      READY
+    </div>
+
+    <div class="timer" id="timerDisplay">
+      03:00
+    </div>
+
+    <div class="round-label">
+      ROUND
+      <span id="roundNum">1</span>
+      /
+      <span id="totalRounds">3</span>
+    </div>
+
+    <div class="timer-actions">
+
+      <button
+        class="btn primary"
+        id="timerBtn"
+        onclick="toggleTimer()">
+        START
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="resetTimer()">
+        RESET
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Session settings</h2>
+
+    <div class="grid2">
+
+      <div>
+        <label>Rounds</label>
+
+        <select
+          id="roundSetting"
+          onchange="resetTimer()">
+
+          <option>3</option>
+          <option>5</option>
+          <option>6</option>
+          <option>8</option>
+          <option>10</option>
+          <option>12</option>
+
+        </select>
+      </div>
+
+      <div>
+
+        <label>Round length</label>
+
+        <select
+          id="lengthSetting"
+          onchange="resetTimer()">
+
+          <option value="60">1:00</option>
+          <option value="120">2:00</option>
+          <option value="180" selected>3:00</option>
+          <option value="240">4:00</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div style="margin-top:12px">
+
+      <label>Rest</label>
+
+      <select
+        id="restSetting"
+        onchange="resetTimer()">
+
+        <option value="30">0:30</option>
+        <option value="60" selected>1:00</option>
+        <option value="90">1:30</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section id="workout" class="page">
+
+  <div class="hero">
+
+    <div class="eyebrow">TODAY'S SESSION</div>
+
+    <h1>Boxing Workout</h1>
+
+    <p id="workoutSubtitle">
+      Technique + conditioning.
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Choose focus</h2>
+
+    <select
+      id="focus"
+      onchange="generateWorkout()">
+
+      <option>Boxing Fundamentals</option>
+      <option>Footwork</option>
+      <option>Conditioning</option>
+      <option>Defense</option>
+      <option>Speed</option>
+
+    </select>
+
+  </div>
+
+  <div
+    class="card"
+    id="exerciseList">
+  </div>
+
+  <button
+    class="btn primary wide"
+    onclick="completeWorkout()">
+
+    FINISH WORKOUT +100 XP
+
+  </button>
+
+  <button
+    class="btn secondary wide"
+    style="margin-top:9px"
+    onclick="generateWorkout()">
+
+    GENERATE NEW WORKOUT
+
+  </button>
+
+</section>
+
+
+<section id="progress" class="page">
+
+  <div class="hero">
+
+    <div class="eyebrow">YOUR RECORD</div>
+
+    <h1>Progress</h1>
+
+    <p>Every round counts.</p>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <strong id="pXP">0</strong>
+      <small>Total XP</small>
+    </div>
+
+    <div class="stat">
+      <strong id="pWorkouts">0</strong>
+      <small>Workouts</small>
+    </div>
+
+    <div class="stat">
+      <strong id="pSessions">0</strong>
+      <small>Sessions</small>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Level progress</h2>
+
+    <div
+      style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px">
+
+      <span>
+        Level <span id="pLevel">1</span>
+      </span>
+
+      <span>
+        <span id="levelXP">0</span>/500 XP
+      </span>
+
+    </div>
+
+    <div class="progress">
+      <i id="levelProgress"></i>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Achievements</h2>
+
+    <div class="badges">
+
+      <div class="badge">
+        <b>🥊 First Round</b>
+        <small>Complete your first round</small>
+      </div>
+
+      <div class="badge">
+        <b>🔥 7-Day Fire</b>
+        <small>Train 7 days in a row</small>
+      </div>
+
+      <div class="badge">
+        <b>💯 Century</b>
+        <small>Complete 100 rounds</small>
+      </div>
+
+      <div class="badge">
+        <b>🏆 Contender</b>
+        <small>Reach level 10</small>
+      </div>
+
+    </div>
+
+  </div>
+
+  <button
+    class="btn secondary wide"
+    onclick="resetAll()">
+
+    Reset my local data
+
+  </button>
+
+</section>
+
+</main>
+
+
+<nav>
+
+  <button
+    id="nav-home"
+    class="active"
+    onclick="showPage('home')">
+
+    <span class="icon">⌂</span>
+    HOME
+
+  </button>
+
+  <button
+    id="nav-timer"
+    onclick="showPage('timer')">
+
+    <span class="icon">⏱</span>
+    ROUNDS
+
+  </button>
+
+  <button
+    id="nav-workout"
+    onclick="showPage('workout')">
+
+    <span class="icon">🥊</span>
+    WORKOUT
+
+  </button>
+
+  <button
+    id="nav-progress"
+    onclick="showPage('progress')">
+
+    <span class="icon">📈</span>
+    PROGRESS
+
+  </button>
+
+</nav>
+
+
+<div class="toast" id="toast"></div>
+
+</div>
+
+
+<script>
+
+const KEY='fightcamp_v1';
+
+let data =
+JSON.parse(localStorage.getItem(KEY)||'null') ||
+{
+  xp:0,
+  rounds:0,
+  minutes:0,
+  workouts:0,
+  sessions:0,
+  streak:0,
+  lastDay:null
+};
+
+let timerId=null;
+let timerRunning=false;
+let phase='round';
+let remaining=180;
+let currentRound=1;
+
+
+function save(){
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
+
+  updateUI();
+}
+
+
+function level(){
+
+  return Math.floor(data.xp/500)+1;
+
+}
+
+
+function updateUI(){
+
+  document.getElementById('xp').textContent=data.xp;
+
+  document.getElementById('level').textContent=level();
+
+  document.getElementById('streak').textContent=data.streak;
+
+  document.getElementById('rounds').textContent=data.rounds;
+
+  document.getElementById('minutes').textContent=data.minutes;
+
+  document.getElementById('pXP').textContent=data.xp;
+
+  document.getElementById('pWorkouts').textContent=data.workouts;
+
+  document.getElementById('pSessions').textContent=data.sessions;
+
+  document.getElementById('pLevel').textContent=level();
+
+  let within=data.xp%500;
+
+  document.getElementById('levelXP').textContent=within;
+
+  document.getElementById('levelProgress').style.width=
+    (within/5)+'%';
+
+  let objectives=
+    Math.min(
+      4,
+      (data.rounds%4)+
+      Math.min(1,data.workouts%2)
+    );
+
+  document.getElementById('missionCount').textContent=
+    objectives;
+
+  document.getElementById('missionProgress').style.width=
+    (objectives/4*100)+'%';
+
+}
+
+
+function showPage(id){
+
+  document
+    .querySelectorAll('.page')
+    .forEach(p=>p.classList.remove('active'));
+
+  document
+    .getElementById(id)
+    .classList.add('active');
+
+  document
+    .querySelectorAll('nav button')
+    .forEach(b=>b.classList.remove('active'));
+
+  document
+    .getElementById('nav-'+id)
+    .classList.add('active');
+
+  updateUI();
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+function toast(msg){
+
+  let t=document.getElementById('toast');
+
+  t.textContent=msg;
+
+  t.classList.add('show');
+
+  setTimeout(
+    ()=>t.classList.remove('show'),
+    1800
+  );
+
+}
+
+
+function markTraining(){
+
+  const today=
+    new Date().toISOString().slice(0,10);
+
+  if(data.lastDay!==today){
+
+    const y=new Date();
+
+    y.setDate(y.getDate()-1);
+
+    const yesterday=
+      y.toISOString().slice(0,10);
+
+    data.streak=
+      data.lastDay===yesterday
+      ? data.streak+1
+      : 1;
+
+    data.lastDay=today;
+
+  }
+
+}
+
+
+function format(sec){
+
+  let m=Math.floor(sec/60);
+
+  let s=sec%60;
+
+  return String(m).padStart(2,'0')+
+         ':'+
+         String(s).padStart(2,'0');
+
+}
+
+
+function syncTimer(){
+
+  document.getElementById('timerDisplay').textContent=
+    format(remaining);
+
+  document.getElementById('roundNum').textContent=
+    currentRound;
+
+  document.getElementById('totalRounds').textContent=
+    document.getElementById('roundSetting').value;
+
+}
+
+
+function resetTimer(){
+
+  clearInterval(timerId);
+
+  timerRunning=false;
+
+  phase='round';
+
+  currentRound=1;
+
+  remaining=
+    +document.getElementById('lengthSetting').value;
+
+  document.getElementById('timerBtn').textContent=
+    'START';
+
+  document.getElementById('timerStatus').textContent=
+    'READY';
+
+  syncTimer();
+
+}
+
+
+function toggleTimer(){
+
+  if(timerRunning){
+
+    clearInterval(timerId);
+
+    timerRunning=false;
+
+    document.getElementById('timerBtn').textContent=
+      'RESUME';
+
+    return;
+
+  }
+
+  timerRunning=true;
+
+  document.getElementById('timerBtn').textContent=
+    'PAUSE';
+
+  document.getElementById('timerStatus').textContent=
+    phase==='round'
+    ? 'WORK'
+    : 'REST';
+
+  timerId=setInterval(tick,1000);
+
+}
+
+
+function tick(){
+
+  if(remaining>0){
+
+    remaining--;
+
+    syncTimer();
+
+    return;
+
+  }
+
+  if(phase==='round'){
+
+    data.rounds++;
+
+    data.minutes+=Math.round(
+      +document.getElementById('lengthSetting').value/60
+    );
+
+    data.xp+=50;
+
+    markTraining();
+
+    save();
+
+    const total=
+      +document.getElementById('roundSetting').value;
+
+    if(currentRound>=total){
+
+      clearInterval(timerId);
+
+      timerRunning=false;
+
+      document.getElementById('timerBtn').textContent=
+        'START';
+
+      document.getElementById('timerStatus').textContent=
+        'SESSION COMPLETE';
+
+      toast('Session complete! +50 XP');
+
+      return;
+
+    }
+
+    phase='rest';
+
+    remaining=
+      +document.getElementById('restSetting').value;
+
+    document.getElementById('timerStatus').textContent=
+      'REST';
+
+    toast(
+      'Round '+currentRound+' complete'
+    );
+
+  }else{
+
+    phase='round';
+
+    currentRound++;
+
+    remaining=
+      +document.getElementById('lengthSetting').value;
+
+    document.getElementById('timerStatus').textContent=
+      'WORK';
+
+    toast('Back to work!');
+
+  }
+
+  syncTimer();
+
+}
+
+
+const workouts={
+
+'Boxing Fundamentals':[
+  ['Shadowboxing','3 rounds','Hands high, clean combinations'],
+  ['Jab–Cross','100 reps','Snap every punch back'],
+  ['Heavy Bag','3 rounds','Work combinations'],
+  ['Core','3 × 30 sec','Stay tight while punching']
+],
+
+'Footwork':[
+  ['Line Steps','3 × 1 min','Forward, back, lateral'],
+  ['Pivot Drill','3 × 1 min','Pivot off the lead foot'],
+  ['Shadowboxing','3 rounds','Move after every combination'],
+  ['Jump Rope','5 × 1 min','Light and relaxed']
+],
+
+'Conditioning':[
+  ['Jump Rope','5 × 2 min','Steady pace'],
+  ['Burpees','4 × 10','Explode up'],
+  ['Heavy Bag','5 rounds','High output'],
+  ['Mountain Climbers','4 × 30 sec','Fast but controlled']
+],
+
+'Defense':[
+  ['Slip Line','3 × 2 min','Slip without standing up'],
+  ['Block & Return','50 reps','Defend then counter'],
+  ['Shadowboxing','3 rounds','Add slips and rolls'],
+  ['Partner Drill','3 rounds','If available at your gym']
+],
+
+'Speed':[
+  ['Speed Bag','3 × 2 min','Relax your shoulders'],
+  ['Fast Jab','5 × 30 sec','Maximum clean speed'],
+  ['Shadowboxing','3 rounds','Fast combinations'],
+  ['Double-End Bag','3 × 2 min','Accuracy first']
+]
+
+};
+
+
+function generateWorkout(){
+
+  let focus=
+    document.getElementById('focus').value;
+
+  let arr=workouts[focus];
+
+  let box=
+    document.getElementById('exerciseList');
+
+  box.innerHTML=
+    '<h2>'+focus+'</h2>';
+
+  arr.forEach((x,i)=>{
+
+    let d=document.createElement('div');
+
+    d.className='exercise';
+
+    d.innerHTML=
+      '<button class="check" onclick="toggleExercise(this)"></button>'+
+      '<div>'+
+      '<div class="name">'+x[0]+'</div>'+
+      '<div class="details">'+x[1]+' • '+x[2]+'</div>'+
+      '</div>';
+
+    box.appendChild(d);
+
+  });
+
+  document.getElementById('workoutSubtitle').textContent=
+    focus+' • '+arr.length+' exercises';
+
+}
+
+
+function toggleExercise(btn){
+
+  btn.parentElement.classList.toggle('done');
+
+}
+
+
+function completeWorkout(){
+
+  data.workouts++;
+
+  data.sessions++;
+
+  data.xp+=100;
+
+  markTraining();
+
+  save();
+
+  toast('Workout complete! +100 XP');
+
+  showPage('progress');
+
+}
+
+
+function resetAll(){
+
+  if(
+    confirm('Reset all FightCamp progress?')
+  ){
+
+    data={
+      xp:0,
+      rounds:0,
+      minutes:0,
+      workouts:0,
+      sessions:0,
+      streak:0,
+      lastDay:null
+    };
+
+    save();
+
+    resetTimer();
+
+    toast('Progress reset');
+
+  }
+
+}
+
+
+generateWorkout();
+
+resetTimer();
+
+updateUI();
+
+</script>
+
+</body>
+</html>
